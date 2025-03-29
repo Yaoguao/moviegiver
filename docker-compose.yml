@@ -10,14 +10,14 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - mynetwork
 
   app:
-    image: your-app-image
-    container_name: your-app
+    #image: go-app-image
+    container_name: go-app
     env_file:
       - .env
     environment:
@@ -26,6 +26,12 @@ services:
       - "8080:8080"
     depends_on:
       - db
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
 
 volumes:
   postgres_data:
