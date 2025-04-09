@@ -1,4 +1,4 @@
-module greenlight.kish.net
+module moviegiver.kish.net
 
 go 1.23.6
 
