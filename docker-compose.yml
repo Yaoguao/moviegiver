@@ -14,20 +14,44 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - mynetwork
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  migrations:
+    build:
+      context: .
+      target: migrator
+    container_name: go-migrate
+    env_file:
+      - .env
+    networks:
+      - mynetwork
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: on-failure
+
 
   app:
-    #image: go-app-image
+    build:
+      context: .
+      target: app
     container_name: go-app
     env_file:
       - .env
-    environment:
-      GREENLIGHT_DB_DSN: ${GREENLIGHT_DB_DSN}
     ports:
       - "8080:8080"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - mynetwork
+    restart: on-failure
+
+
 
 networks:
   mynetwork:
