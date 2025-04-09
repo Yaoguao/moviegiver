@@ -5,8 +5,8 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
-	"greenlight.kish.net/internal/data"
 	"log"
+	"moviegiver.kish.net/internal/data"
 	"net/http"
 	"os"
 	"time"
@@ -45,9 +45,9 @@ func main() {
 
 	flag.Parse()
 
-	cfg.db.dsn = os.Getenv("GREENLIGHT_DB_DSN")
+	cfg.db.dsn = os.Getenv("MOVIEGIVER_DB_DSN")
 	if cfg.db.dsn == "" {
-		log.Fatal("GREENLIGHT_DB_DSN environment variable is not set")
+		log.Fatal("MOVIEGIVER_DB_DSN environment variable is not set")
 	}
 
 	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
