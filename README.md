@@ -1,1 +1,1 @@
-Just a project, for studying without extra libraries, for now :D
+Just a project, for studying without extra libraries, almost :D
