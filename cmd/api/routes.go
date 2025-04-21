@@ -22,5 +22,8 @@ func (app *application) routes() http.Handler {
 	// movie handler endpoint param
 	router.HandlerFunc(http.MethodGet, "/api/v1/movies", app.listMoviesHandler)
 
+	// user handler
+	router.HandlerFunc(http.MethodPost, "/v1/users", app.registerUserHandler)
+
 	return app.recoverPanic(app.rateLimit(router))
 }
